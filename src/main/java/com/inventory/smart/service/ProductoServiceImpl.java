@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Service
-public class ProductoServiceImpl implements ProductoService {
+public final class ProductoServiceImpl implements ProductoService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductoServiceImpl.class);
 
@@ -60,10 +60,10 @@ public class ProductoServiceImpl implements ProductoService {
      * <p>
      * Aplica filtros en cadena usando Stream API:
      * <ol>
-     *   <li>Filtro por nombre de categoría (si se proporciona)</li>
-     *   <li>Filtro por precio mínimo (si se proporciona)</li>
-     *   <li>Filtro por precio máximo (si se proporciona)</li>
-     *   <li>Filtro por disponibilidad de stock (si se proporciona)</li>
+     * <li>Filtro por nombre de categoría (si se proporciona)</li>
+     * <li>Filtro por precio mínimo (si se proporciona)</li>
+     * <li>Filtro por precio máximo (si se proporciona)</li>
+     * <li>Filtro por disponibilidad de stock (si se proporciona)</li>
      * </ol>
      * </p>
      */
