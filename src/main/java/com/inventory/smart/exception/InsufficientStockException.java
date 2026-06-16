@@ -1,5 +1,7 @@
 package com.inventory.smart.exception;
 
+import java.io.Serial;
+
 /**
  * Excepción lanzada cuando se intenta realizar una salida de inventario
  * pero el stock disponible es insuficiente para cubrir la cantidad solicitada.
@@ -11,6 +13,9 @@ package com.inventory.smart.exception;
  * @since 1.0
  */
 public class InsufficientStockException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Identificador del producto involucrado. */
     private final Long productoId;
