@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.web.server.ResponseStatusException;
+
 /**
  * Controlador REST para la gestión de productos del inventario.
  * <p>
@@ -193,6 +195,10 @@ public class ProductoController {
             @RequestParam("q") String q) {
 
         log.debug("GET /api/productos/buscar?q={}", q);
+        if (q == null || q.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El parámetro 'q' no puede estar vacío");
+        }
         List<ProductoResponse> resultados = productoService.buscarPorNombre(q);
         return ResponseEntity.ok(resultados);
     }

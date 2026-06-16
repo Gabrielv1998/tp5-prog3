@@ -1,6 +1,7 @@
 package com.inventory.smart.dto;
 
 import com.inventory.smart.model.MovimientoInventario;
+import com.inventory.smart.model.TipoMovimiento;
 
 import java.time.LocalDateTime;
 
