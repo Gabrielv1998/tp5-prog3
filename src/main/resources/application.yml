@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: smart-inventory
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+inventario:
+  stock:
+    minimo: 10
+    critico: 3
+
+logging:
+  level:
+    com.inventory.smart: DEBUG
