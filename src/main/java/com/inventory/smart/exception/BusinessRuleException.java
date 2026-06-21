@@ -1,5 +1,7 @@
 package com.inventory.smart.exception;
 
+import java.io.Serial;
+
 /**
  * Excepción lanzada cuando se viola una regla de negocio del sistema.
  * <p>
@@ -16,6 +18,9 @@ package com.inventory.smart.exception;
  */
 public class BusinessRuleException extends RuntimeException {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
+    
     /**
      * Construye la excepción con un mensaje descriptivo de la regla violada.
      *

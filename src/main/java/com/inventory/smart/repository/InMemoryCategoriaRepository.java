@@ -48,7 +48,7 @@ public class InMemoryCategoriaRepository extends GenericInMemoryRepository<Categ
     @Override
     public Optional<Categoria> findByNombre(String nombre) {
         log.debug("Buscando categoría por nombre='{}'", nombre);
-        return store.values().stream()
+        return dataStore.values().stream()
                 .filter(c -> c.getNombre().equals(nombre))
                 .findFirst();
     }

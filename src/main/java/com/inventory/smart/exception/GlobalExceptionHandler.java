@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.stream.Collectors;
 
@@ -76,11 +77,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Maneja {@link BusinessRuleException} retornando HTTP 400 Bad Request.
+     * Maneja {@link BusinessRuleException} retornando HTTP 409 Conflict.
+     *
+     * <p>Se utiliza 409 porque las violaciones de regla de negocio representan
+     * conflictos con el estado actual del recurso (p. ej. eliminar una categoría
+     * con productos asociados), no errores de formato en la petición.</p>
      *
      * @param ex      la excepción capturada
      * @param request la petición web actual
-     * @return respuesta con estado 400 y descripción de la regla violada
+     * @return respuesta con estado 409 y descripción de la regla violada
      */
     @ExceptionHandler(BusinessRuleException.class)
     public ResponseEntity<ErrorResponse> handleBusinessRule(BusinessRuleException ex,
@@ -119,7 +124,30 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    /**
+     /**
+     * Maneja {@link ResponseStatusException} respetando el código HTTP que ella misma declara.
+     *
+     * <p>Sin este handler, el catch-all {@link Exception} absorbería estas excepciones y
+     * devolvería siempre HTTP 500, ignorando el código de estado original (ej. 400).</p>
+     *
+     * @param ex      la excepción con estado HTTP explícito
+     * @param request la petición web actual
+     * @return respuesta con el código HTTP declarado en la excepción
+     */
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponse> handleResponseStatus(ResponseStatusException ex,
+                                                               WebRequest request) {
+        log.warn("ResponseStatusException: status={}, reason={}", ex.getStatusCode(), ex.getReason());
+        ErrorResponse error = ErrorResponse.of(
+                ex.getStatusCode().value(),
+                ex.getReason() != null ? ex.getReason() : "Error en la solicitud",
+                ex.getMessage(),
+                extractPath(request)
+        );
+        return ResponseEntity.status(ex.getStatusCode()).body(error);
+    }
+
+     /**
      * Maneja cualquier excepción no contemplada retornando HTTP 500.
      *
      * @param ex      la excepción genérica

@@ -57,7 +57,7 @@ public class InMemoryProductoRepository extends GenericInMemoryRepository<Produc
     @Override
     public List<Producto> findByCategoriaId(Long categoriaId) {
         log.debug("Buscando productos por categoriaId={}", categoriaId);
-        return store.values().stream()
+        return dataStore.values().stream()
                 .filter(p -> p.getCategoriaId().equals(categoriaId))
                 .collect(Collectors.toList());
     }
@@ -73,7 +73,7 @@ public class InMemoryProductoRepository extends GenericInMemoryRepository<Produc
     public List<Producto> buscarPorNombre(String query) {
         log.debug("Buscando productos por nombre que contenga '{}'", query);
         String lowerQuery = query.toLowerCase();
-        return store.values().stream()
+       return dataStore.values().stream()
                 .filter(p -> p.getNombre().toLowerCase().contains(lowerQuery))
                 .collect(Collectors.toList());
     }

@@ -53,7 +53,7 @@ public class InMemoryMovimientoRepository extends GenericInMemoryRepository<Movi
     @Override
     public List<MovimientoInventario> findByProductoId(Long productoId) {
         log.debug("Buscando movimientos por productoId={}", productoId);
-        return store.values().stream()
+        return dataStore.values().stream()
                 .filter(m -> m.getProductoId().equals(productoId))
                 .sorted(Comparator.comparing(MovimientoInventario::getFecha).reversed())
                 .collect(Collectors.toList());

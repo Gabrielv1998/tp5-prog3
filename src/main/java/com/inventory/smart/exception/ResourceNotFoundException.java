@@ -1,5 +1,7 @@
 package com.inventory.smart.exception;
 
+import java.io.Serial;
+
 /**
  * Excepción lanzada cuando un recurso solicitado no existe en el sistema.
  * <p>
@@ -11,6 +13,9 @@ package com.inventory.smart.exception;
  * @since 1.0
  */
 public class ResourceNotFoundException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /** Nombre del recurso (ej: "Producto", "Categoria"). */
     private final String resourceName;
